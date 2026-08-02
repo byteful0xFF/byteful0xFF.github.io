@@ -7,8 +7,8 @@
     <style>
         /* --- GLOBAL STYLES --- */
         body {
-                background: linear-gradient(180deg, #081b18 0%, #0e2d29 100%);
-                color: #eafff9;
+                background: #050505;
+                color: #eaffef;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 display: flex;
                 flex-direction: column;
@@ -32,13 +32,13 @@
         .typewriter-text {
                 font-size: 2.5rem;
                 font-weight: bold;
-                color: #d8fff8;
+                color: #8cffb2;
                 text-shadow:
-                        0 0 10px rgba(0, 255, 200, 0.7),
-                        0 0 20px rgba(0, 255, 200, 0.45),
-                        0 0 40px rgba(0, 255, 170, 0.25);
+                        0 0 8px rgba(0, 255, 100, 0.8),
+                        0 0 18px rgba(0, 255, 100, 0.6),
+                        0 0 36px rgba(0, 255, 100, 0.35);
                 letter-spacing: 2px;
-                border-right: 3px solid #3cffc8;
+                border-right: 3px solid #00ff66;
                 white-space: nowrap;
                 background: transparent;
                 padding-right: 4px;
@@ -51,7 +51,7 @@
                 }
 
                 50% {
-                        border-color: #3cffc8;
+                        border-color: #00ff66;
                 }
         }
 
@@ -66,8 +66,8 @@
 
         /* --- CARD STYLES --- */
         .card-link {
-                background: linear-gradient(135deg, #10332d 0%, #174842 100%);
-                border: 1px solid #2c8c78;
+                background: linear-gradient(135deg, #081208 0%, #102110 100%);
+                border: 2px solid #00aa44;
                 border-radius: 14px;
                 padding: 15px 20px;
                 text-decoration: none;
@@ -75,28 +75,31 @@
                 display: flex;
                 flex-direction: column;
                 transition: all 0.25s ease;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+                box-shadow:
+                        0 0 12px rgba(0, 255, 100, 0.15),
+                        0 8px 20px rgba(0, 0, 0, 0.5);
         }
 
         .card-link:hover {
                 transform: translateY(-4px);
-                border-color: #44ffd3;
-                background: linear-gradient(135deg, #15463d 0%, #1d5f55 100%);
+                background: linear-gradient(135deg, #102010 0%, #183818 100%);
+                border-color: #00ff66;
                 box-shadow:
-                        0 0 18px rgba(0, 255, 187, 0.25),
-                        0 12px 30px rgba(0, 0, 0, 0.4);
+                        0 0 20px rgba(0, 255, 100, 0.45),
+                        0 0 40px rgba(0, 255, 100, 0.15);
         }
 
         .btn-name {
                 font-size: 1.25rem;
                 font-weight: bold;
-                color: #5affdc;
+                color: #66ff99;
                 margin-bottom: 5px;
+                text-shadow: 0 0 8px rgba(0, 255, 100, 0.35);
         }
 
         .btn-description {
                 font-size: 0.9rem;
-                color: #b7e7dd;
+                color: #b8ffcb;
                 line-height: 1.4;
         }
     </style>
