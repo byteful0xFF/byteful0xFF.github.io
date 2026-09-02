@@ -1,294 +1,570 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Byteful - Projects & Links</title>
+<title>Byteful - Projects & Links</title>
 
-    <meta name="title" content="Byteful - Projects & Links">
-    <meta name="description" content="Byteful's main page containing projects, portfolio, tools, and source code.">
-    <meta name="keywords" content="Byteful, carbon612, Cyan, CyanPizza, Unity, C#, Python, Projects, GitHub">
-    <meta name="author" content="Byteful">
+<meta name="title" content="Byteful - Projects & Links">
+<meta name="description" content="Byteful's main page containing projects, portfolio, tools, and source code.">
+<meta name="keywords" content="Byteful, carbon612, Cyan, CyanPizza, Unity, C#, Python, Projects, GitHub">
+<meta name="author" content="Byteful">
+<meta name="theme-color" content="#00d9ff">
 
-    <meta name="theme-color" content="#00d9ff">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Byteful - Projects & Links">
+<meta property="og:description" content="Developer, musician, and reverse engineer. View my projects and code.">
+<meta property="og:image" content="https://byteful0xff.github.io/banner.png">
 
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Byteful - Projects & Links">
-    <meta property="og:description" content="Developer, musician, and reverse engineer. View my projects and code.">
-    <meta property="og:image" content="https://byteful0xff.github.io/banner.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Byteful - Projects & Links">
+<meta name="twitter:description" content="My projects, portfolio, and source code.">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Byteful - Projects & Links">
-    <meta name="twitter:description" content="My projects, portfolio, and source code.">
+<link rel="icon" href="favicon.png">
 
-    <link rel="icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    :root {
+        --cyan: #00d9ff;
+        --cyan-soft: rgba(0, 217, 255, 0.12);
+        --bg: #07090c;
+        --card: rgba(14, 18, 23, 0.72);
+        --border: rgba(255, 255, 255, 0.08);
+        --text: #f5f7fa;
+        --muted: #8b949e;
+    }
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at top, #001820, #09090b 50%);
-            color: white;
-            font-family: "JetBrains Mono", monospace;
+    html {
+        scroll-behavior: smooth;
+    }
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        font-family: "JetBrains Mono", monospace;
+        background:
+            radial-gradient(
+                circle at 50% -10%,
+                rgba(0, 217, 255, 0.16),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 10% 80%,
+                rgba(0, 140, 255, 0.06),
+                transparent 30%
+            ),
+            var(--bg);
 
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
+        overflow-x: hidden;
+    }
+
+    /* subtle background grid */
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.22;
+
+        background-image:
+            linear-gradient(
+                rgba(255,255,255,0.025) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(255,255,255,0.025) 1px,
+                transparent 1px
+            );
+
+        background-size: 45px 45px;
+
+        mask-image: linear-gradient(
+            to bottom,
+            black,
+            transparent 80%
+        );
+    }
+
+    /* glowing orb */
+
+    body::after {
+        content: "";
+        position: fixed;
+
+        width: 400px;
+        height: 400px;
+
+        left: 50%;
+        top: 15%;
+
+        transform: translate(-50%, -50%);
+
+        background: var(--cyan);
+        opacity: 0.035;
+
+        filter: blur(100px);
+
+        pointer-events: none;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+
+        width: min(92%, 1000px);
+
+        padding: 70px 0 40px;
+
+        text-align: center;
+    }
+
+    /* header */
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 8px 14px;
+
+        margin-bottom: 20px;
+
+        border: 1px solid rgba(0, 217, 255, 0.18);
+        border-radius: 999px;
+
+        background: rgba(0, 217, 255, 0.05);
+
+        color: #8cecff;
+
+        font-size: 12px;
+        letter-spacing: 1px;
+
+        box-shadow:
+            0 0 25px rgba(0, 217, 255, 0.05);
+    }
+
+    .badge span {
+        color: var(--cyan);
+    }
+
+    h1 {
+        margin: 0;
+
+        font-size: clamp(55px, 10vw, 92px);
+
+        font-weight: 700;
+
+        letter-spacing: -5px;
+
+        color: white;
+
+        text-shadow:
+            0 0 20px rgba(0, 217, 255, 0.35),
+            0 0 60px rgba(0, 217, 255, 0.12);
+    }
+
+    h1::after {
+        content: "✦";
+
+        display: inline-block;
+
+        margin-left: 12px;
+
+        font-size: 22px;
+
+        color: var(--cyan);
+
+        vertical-align: top;
+
+        transform: translateY(8px);
+
+        text-shadow:
+            0 0 12px var(--cyan);
+    }
+
+    .subtitle {
+        max-width: 600px;
+
+        margin: 18px auto 45px;
+
+        color: var(--muted);
+
+        font-size: 14px;
+
+        line-height: 1.8;
+    }
+
+    .subtitle strong {
+        color: #dce3e8;
+        font-weight: 500;
+    }
+
+    /* cards */
+
+    .links {
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(280px, 1fr));
+
+        gap: 16px;
+
+        text-align: left;
+    }
+
+    .card {
+        position: relative;
+
+        display: block;
+
+        padding: 25px;
+
+        min-height: 220px;
+
+        overflow: hidden;
+
+        border: 1px solid var(--border);
+        border-radius: 18px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255,255,255,0.045),
+                rgba(255,255,255,0.015)
+            ),
+            var(--card);
+
+        backdrop-filter: blur(12px);
+
+        color: white;
+        text-decoration: none;
+
+        transition:
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            box-shadow 0.25s ease,
+            background 0.25s ease;
+    }
+
+    /* card glow */
+
+    .card::before {
+        content: "";
+
+        position: absolute;
+
+        width: 180px;
+        height: 180px;
+
+        top: -100px;
+        right: -80px;
+
+        background: var(--cyan);
+
+        opacity: 0;
+
+        filter: blur(70px);
+
+        transition: opacity 0.3s ease;
+    }
+
+    /* little corner symbol */
+
+    .card::after {
+        content: "↗";
+
+        position: absolute;
+
+        top: 20px;
+        right: 22px;
+
+        color: #4d5963;
+
+        font-size: 18px;
+
+        transition:
+            color 0.25s ease,
+            transform 0.25s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+
+        border-color: rgba(0, 217, 255, 0.45);
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(0, 217, 255, 0.08),
+                rgba(255,255,255,0.025)
+            ),
+            var(--card);
+
+        box-shadow:
+            0 15px 45px rgba(0, 0, 0, 0.35),
+            0 0 30px rgba(0, 217, 255, 0.08);
+    }
+
+    .card:hover::before {
+        opacity: 0.08;
+    }
+
+    .card:hover::after {
+        color: var(--cyan);
+        transform: translate(3px, -3px);
+    }
+
+    .icon {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 48px;
+        height: 48px;
+
+        margin-bottom: 22px;
+
+        border: 1px solid rgba(0, 217, 255, 0.16);
+
+        border-radius: 12px;
+
+        background: var(--cyan-soft);
+
+        color: var(--cyan);
+
+        font-size: 22px;
+
+        box-shadow:
+            inset 0 0 20px rgba(0, 217, 255, 0.03);
+    }
+
+    .card h2 {
+        margin: 0 0 10px;
+
+        font-size: 17px;
+
+        font-weight: 600;
+
+        color: #f5f7fa;
+    }
+
+    .card p {
+        margin: 0;
+
+        color: var(--muted);
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+    /* footer */
+
+    footer {
+        margin-top: 45px;
+
+        color: #4d555d;
+
+        font-size: 11px;
+
+        line-height: 2;
+    }
+
+    footer .dot {
+        color: var(--cyan);
+    }
+
+    footer a {
+        color: #69737d;
+
+        text-decoration: none;
+
+        transition: color 0.2s;
+    }
+
+    footer a:hover {
+        color: var(--cyan);
+    }
+
+    /* mobile */
+
+    @media (max-width: 600px) {
         .container {
-            width: 90%;
-            max-width: 900px;
-            text-align: center;
+            padding: 45px 0 30px;
         }
-
 
         h1 {
-            font-size: 70px;
-            margin-bottom: 10px;
-            color: #00d9ff;
-
-            text-shadow:
-                0 0 10px #00d9ff,
-                0 0 30px #00d9ff;
+            letter-spacing: -3px;
         }
 
+        h1::after {
+            font-size: 16px;
+            margin-left: 5px;
+        }
 
         .subtitle {
-            color: #aaa;
-            font-size: 18px;
-            margin-bottom: 50px;
+            font-size: 12px;
+            margin-bottom: 30px;
         }
-
 
         .links {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(260px, 1fr));
-
-            gap: 20px;
+            grid-template-columns: 1fr;
         }
-
 
         .card {
-            background: rgba(20,20,25,.8);
-
-            border: 1px solid #222;
-
-            padding: 25px;
-
-            border-radius: 15px;
-
-            transition: .25s;
-
-            text-decoration: none;
-
-            color: white;
+            min-height: auto;
         }
+    }
 
+    /* reduced motion */
 
-        .card:hover {
-            transform: translateY(-8px);
-
-            border-color: #00d9ff;
-
-            box-shadow:
-                0 0 20px rgba(0,217,255,.3);
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            scroll-behavior: auto !important;
+            transition: none !important;
         }
-
-
-        .card h2 {
-            color: #00d9ff;
-
-            margin-top: 0;
-        }
-
-
-        .card p {
-            color: #aaa;
-
-            line-height: 1.5;
-        }
-
-
-        .icon {
-            font-size: 35px;
-        }
-
-
-        footer {
-            margin-top: 50px;
-
-            color: #555;
-
-            font-size: 14px;
-        }
-
-
-        @media(max-width:600px) {
-
-            h1 {
-                font-size: 45px;
-            }
-
-        }
-
-    </style>
+    }
+</style>
 
 </head>
 
 <body>
 
-
 <div class="container">
 
-    <h1>
-        byteful
-    </h1>
+<div class="badge">
+    <span>✦</span>
+    BYTEFUL // ONLINE
+</div>
 
-    <div class="subtitle">
-        programmer • musician • reverse engineer
-        <br>
-        projects, tools, and source code
-    </div>
+<h1>byteful</h1>
 
+<div class="subtitle">
+    <strong>programmer</strong>
+    •
+    <strong>musician</strong>
+    •
+    <strong>reverse engineer</strong>
 
-    <div class="links">
+    <br>
 
+    projects, tools, experiments, and source code
+</div>
 
-        <a class="card"
-           href="https://byteful0xff.github.io/byteful.github.io/">
+<div class="links">
 
-            <div class="icon">
-                💻
-            </div>
+    <a class="card"
+       href="https://byteful0xff.github.io/byteful.github.io/">
 
-            <h2>
-                Main Portfolio
-            </h2>
+        <div class="icon">⌘</div>
 
-            <p>
-                Learn about me, my skills,
-                projects, and experience.
-            </p>
+        <h2>Main Portfolio</h2>
 
-        </a>
+        <p>
+            learn about me, my skills,
+            projects, and experience.
+        </p>
 
-
-
-        <a class="card"
-           href="https://github.com/byteful0xFF/WebsiteCodeInjector">
-
-            <div class="icon">
-                💉
-            </div>
-
-            <h2>
-                Website Code Injector
-            </h2>
-
-            <p>
-                A browser-based tool for injecting
-                HTML, CSS, and JavaScript into websites.
-            </p>
-
-        </a>
+    </a>
 
 
+    <a class="card"
+       href="https://github.com/byteful0xFF/WebsiteCodeInjector">
 
-        <a class="card"
-           href="https://github.com/byteful0xFF/Yeeps-API">
+        <div class="icon">⟨/⟩</div>
 
-            <div class="icon">
-                🔌
-            </div>
+        <h2>Website Code Injector</h2>
 
-            <h2>
-                Yeeps API
-            </h2>
+        <p>
+            a browser-based tool for injecting
+            html, css, and javascript into websites.
+        </p>
 
-            <p>
-                API tools and resources for Yeeps.
-            </p>
-
-        </a>
+    </a>
 
 
+    <a class="card"
+       href="https://github.com/byteful0xFF/Yeeps-API">
 
-        <a class="card"
-           href="https://github.com/byteful0xFF/cobradotio">
+        <div class="icon">⟐</div>
 
-            <div class="icon">
-                🐍
-            </div>
+        <h2>Yeeps API</h2>
 
-            <h2>
-                cobradotio
-            </h2>
+        <p>
+            api tools and resources for yeeps.
+        </p>
 
-            <p>
-                Source code and development files.
-            </p>
-
-        </a>
-
-        <a class="card"
-           href="/mods">
-
-            <div class="icon">
-                🌱
-            </div>
-                
-            <h2>
-                Mods
-            </h2>
-
-            <p>
-                Root mods and APKs
-            </p>
-
-        </a>
-
-        <a class="card"
-           href="/mods">
-
-            <div class="icon">
-                📱
-            </div>
-                
-            <h2>
-                iOS Shortcuts
-            </h2>
-
-            <p>
-                iOS Shortcuts, Viruses, and exploits.
-            </p>
-
-        </a>
+    </a>
 
 
-    </div>
+    <a class="card"
+       href="https://github.com/byteful0xFF/cobradotio">
+
+        <div class="icon">⌁</div>
+
+        <h2>cobradotio</h2>
+
+        <p>
+            source code and development files.
+        </p>
+
+    </a>
 
 
-    <footer>
-        © 2026 byteful
-        <br>
-        github.com/byteful0xFF
-    </footer>
+    <a class="card"
+       href="/mods">
 
+        <div class="icon">✦</div>
+
+        <h2>Mods</h2>
+
+        <p>
+            root mods and apks.
+        </p>
+
+    </a>
+
+
+    <a class="card"
+       href="/ios">
+
+        <div class="icon">◇</div>
+
+        <h2>iOS Shortcuts</h2>
+
+        <p>
+            ios shortcuts, experiments,
+            and security research.
+        </p>
+
+    </a>
 
 </div>
 
+<footer>
+    © 2026 byteful
+    <span class="dot">•</span>
+    <a href="https://github.com/byteful0xFF">
+        github.com/byteful0xFF
+    </a>
+</footer>
+
+</div>
 
 </body>
 </html>
