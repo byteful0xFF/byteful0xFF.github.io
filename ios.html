@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standalone Mods</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        min-height: 100%;
+    }
+
+    body {
+        background: #050505;
+        color: #eaffef;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        padding: 60px 20px;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    /* =========================
+       MOVING STRIPES
+    ========================= */
+
+    .stripes {
+        position: fixed;
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+
+        background: repeating-linear-gradient(
+            135deg,
+            #00ff66 0px,
+            #00ff66 35px,
+            #071007 35px,
+            #071007 70px,
+            #66ff99 70px,
+            #66ff99 105px,
+            #071007 105px,
+            #071007 140px
+        );
+
+        opacity: 0.13;
+        z-index: 0;
+        pointer-events: none;
+
+        animation: stripeMove 4s linear infinite;
+        will-change: transform;
+    }
+
+    .stripes.paused {
+        animation-play-state: paused;
+    }
+
+    @keyframes stripeMove {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+
+        to {
+            transform: translate3d(140px, 140px, 0);
+        }
+    }
+
+    .background-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.78);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* =========================
+       ENTER SCREEN
+    ========================= */
+
+    .enter-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #050505;
+        cursor: pointer;
+
+        transition:
+            opacity 0.7s ease,
+            visibility 0.7s ease;
+    }
+
+    .enter-screen::before {
+        content: "";
+        position: absolute;
+        inset: -100%;
+
+        background: repeating-linear-gradient(
+            135deg,
+            #00ff66 0px,
+            #00ff66 35px,
+            #071007 35px,
+            #071007 70px,
+            #66ff99 70px,
+            #66ff99 105px,
+            #071007 105px,
+            #071007 140px
+        );
+
+        opacity: 0.15;
+        animation: enterStripeMove 4s linear infinite;
+    }
+
+    @keyframes enterStripeMove {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+
+        to {
+            transform: translate3d(140px, 140px, 0);
+        }
+    }
+
+    .enter-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .enter-text {
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: bold;
+        color: #8cffb2;
+
+        text-shadow:
+            0 0 10px rgba(0, 255, 100, 0.9),
+            0 0 25px rgba(0, 255, 100, 0.6),
+            0 0 50px rgba(0, 255, 100, 0.35);
+
+        animation: enterPulse 1.5s ease-in-out infinite;
+    }
+
+    .enter-subtitle {
+        margin-top: 15px;
+        color: #b8ffcb;
+        font-size: 0.95rem;
+        opacity: 0.8;
+    }
+
+    @keyframes enterPulse {
+        0%, 100% {
+            opacity: 0.7;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.04);
+        }
+    }
+
+    .enter-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* =========================
+       MAIN CONTENT
+    ========================= */
+
+    .main-content {
+        position: relative;
+        z-index: 2;
+
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    .title-container {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+
+    .typewriter-text {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #8cffb2;
+
+        text-shadow:
+            0 0 8px rgba(0, 255, 100, 0.8),
+            0 0 18px rgba(0, 255, 100, 0.6),
+            0 0 36px rgba(0, 255, 100, 0.35);
+
+        letter-spacing: 2px;
+        border-right: 3px solid #00ff66;
+        white-space: nowrap;
+        padding-right: 4px;
+
+        animation: blink 0.75s step-end infinite;
+    }
+
+    @keyframes blink {
+        from,
+        to {
+            border-color: transparent;
+        }
+
+        50% {
+            border-color: #00ff66;
+        }
+    }
+
+    /* =========================
+       LINKS
+    ========================= */
+
+    .links-container {
+        width: 100%;
+        max-width: 500px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .card-link {
+        background: linear-gradient(
+            135deg,
+            #081208 0%,
+            #102110 100%
+        );
+
+        border: 2px solid #00aa44;
+        border-radius: 14px;
+        padding: 15px 20px;
+
+        text-decoration: none;
+        color: #ffffff;
+
+        display: flex;
+        flex-direction: column;
+
+        transition: all 0.25s ease;
+
+        box-shadow:
+            0 0 12px rgba(0, 255, 100, 0.15),
+            0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-link:hover {
+        transform: translateY(-4px);
+
+        background: linear-gradient(
+            135deg,
+            #102010 0%,
+            #183818 100%
+        );
+
+        border-color: #00ff66;
+
+        box-shadow:
+            0 0 20px rgba(0, 255, 100, 0.45),
+            0 0 40px rgba(0, 255, 100, 0.15);
+    }
+
+    .btn-name {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #66ff99;
+        margin-bottom: 5px;
+
+        text-shadow:
+            0 0 8px rgba(0, 255, 100, 0.35);
+    }
+
+    .btn-description {
+        font-size: 0.9rem;
+        color: #b8ffcb;
+        line-height: 1.4;
+    }
+
+    /* =========================
+       CORNER SOCIAL BUTTONS
+    ========================= */
+
+    .social-button {
+        position: fixed;
+        bottom: 20px;
+        z-index: 20;
+
+        padding: 11px 16px;
+
+        border: 2px solid #00aa44;
+        border-radius: 10px;
+
+        background: rgba(5, 15, 7, 0.94);
+        color: #66ff99;
+
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: bold;
+
+        box-shadow:
+            0 0 15px rgba(0, 255, 100, 0.18);
+
+        transition: 0.2s ease;
+    }
+
+    .social-button:hover {
+        transform: translateY(-3px);
+        border-color: #00ff66;
+
+        box-shadow:
+            0 0 22px rgba(0, 255, 100, 0.4);
+    }
+
+    .youtube-button {
+        left: 20px;
+    }
+
+    .scratch-button {
+        right: 20px;
+    }
+
+    /* =========================
+       SETTINGS BUTTON
+    ========================= */
+
+    .settings-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+
+        width: 45px;
+        height: 45px;
+
+        border: 2px solid #00aa44;
+        border-radius: 12px;
+
+        background: #081208;
+        color: #66ff99;
+
+        font-size: 22px;
+        cursor: pointer;
+
+        box-shadow:
+            0 0 15px rgba(0, 255, 100, 0.2);
+
+        transition: 0.2s ease;
+
+        z-index: 20;
+    }
+
+    .settings-button:hover {
+        border-color: #00ff66;
+        transform: rotate(20deg);
+
+        box-shadow:
+            0 0 20px rgba(0, 255, 100, 0.4);
+    }
+
+    /* =========================
+       SETTINGS PANEL
+    ========================= */
+
+    .settings-panel {
+        position: fixed;
+        top: 75px;
+        right: 20px;
+
+        width: 270px;
+        padding: 20px;
+
+        background: rgba(5, 15, 7, 0.97);
+
+        border: 2px solid #00aa44;
+        border-radius: 15px;
+
+        box-shadow:
+            0 0 25px rgba(0, 255, 100, 0.25),
+            0 15px 40px rgba(0, 0, 0, 0.6);
+
+        z-index: 19;
+        display: none;
+    }
+
+    .settings-panel.open {
+        display: block;
+    }
+
+    .settings-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #66ff99;
+        margin-bottom: 18px;
+    }
+
+    .setting {
+        margin-bottom: 18px;
+    }
+
+    .setting label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 8px;
+
+        color: #b8ffcb;
+        font-size: 0.9rem;
+    }
+
+    .setting input[type="range"] {
+        width: 100%;
+        accent-color: #00ff66;
+    }
+
+    .setting input[type="checkbox"] {
+        accent-color: #00ff66;
+        width: 18px;
+        height: 18px;
+    }
+
+    .play-button {
+        width: 100%;
+        padding: 10px;
+
+        border: 1px solid #00aa44;
+        border-radius: 9px;
+
+        background: #0b1b0d;
+        color: #66ff99;
+
+        cursor: pointer;
+        font-weight: bold;
+
+        margin-top: 8px;
+    }
+
+    .play-button:hover {
+        background: #102a14;
+        border-color: #00ff66;
+    }
+
+    .music-status {
+        font-size: 0.75rem;
+        color: #7cff9d;
+        margin-top: 6px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+        body {
+            padding: 45px 15px 90px;
+        }
+
+        .typewriter-text {
+            font-size: 1.8rem;
+        }
+
+        .social-button {
+            font-size: 0.72rem;
+            padding: 9px 11px;
+        }
+
+        .youtube-button {
+            left: 10px;
+        }
+
+        .scratch-button {
+            right: 10px;
+        }
+
+        .settings-panel {
+            right: 10px;
+            left: 10px;
+            width: auto;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .stripes,
+        .enter-screen::before,
+        .enter-text {
+            animation: none;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     ENTER SCREEN
+========================= -->
+
+<div class="enter-screen" id="enterScreen">
+    <div class="enter-content">
+        <div class="enter-text">
+            Click to enter...
+        </div>
+
+        <div class="enter-subtitle">
+            music will start automatically
+        </div>
+    </div>
+</div>
+
+<!-- =========================
+     BACKGROUND
+========================= -->
+
+<div class="stripes" id="stripes"></div>
+<div class="background-overlay"></div>
+
+<!-- =========================
+     SETTINGS
+========================= -->
+
+<button
+    class="settings-button"
+    id="settingsButton"
+    aria-label="Open settings"
+    type="button"
+>
+    ⚙
+</button>
+
+<div class="settings-panel" id="settingsPanel">
+
+    <div class="settings-title">
+        Settings
+    </div>
+
+    <div class="setting">
+
+        <label>
+            <span>Music</span>
+
+            <input
+                type="checkbox"
+                id="musicToggle"
+                checked
+            >
+        </label>
+
+        <button
+            class="play-button"
+            id="playButton"
+            type="button"
+        >
+            ▶ Play Music
+        </button>
+
+        <div
+            class="music-status"
+            id="musicStatus"
+        >
+            Music enabled
+        </div>
+
+    </div>
+
+    <div class="setting">
+
+        <label>
+            <span>Music Volume</span>
+            <span id="volumeValue">50%</span>
+        </label>
+
+        <input
+            type="range"
+            id="volumeSlider"
+            min="0"
+            max="100"
+            value="50"
+        >
+
+    </div>
+
+    <div class="setting">
+
+        <label>
+            <span>Animated Stripes</span>
+
+            <input
+                type="checkbox"
+                id="stripeAnimation"
+                checked
+            >
+        </label>
+
+    </div>
+
+    <div class="setting">
+
+        <label>
+            <span>Stripe Opacity</span>
+            <span id="stripeOpacityValue">13%</span>
+        </label>
+
+        <input
+            type="range"
+            id="stripeOpacity"
+            min="0"
+            max="30"
+            value="13"
+        >
+
+    </div>
+
+    <div class="setting">
+
+        <label>
+            <span>Stripe Speed</span>
+            <span id="stripeSpeedValue">4s</span>
+        </label>
+
+        <input
+            type="range"
+            id="stripeSpeed"
+            min="1"
+            max="15"
+            value="4"
+        >
+
+    </div>
+
+</div>
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main-content">
+
+    <div class="title-container">
+        <div
+            class="typewriter-text"
+            id="typewriter"
+        ></div>
+    </div>
+
+    <div class="links-container">
+
+        <a
+            href="https://www.icloud.com/shortcuts/d89efc31e14d49fd9b5e8c875a3edd8d"
+            download
+            class="card-link"
+        >
+            <span class="btn-name">
+                Carbon Patcher
+            </span>
+
+            <span class="btn-description">
+                Basic virus fixer. Fixes voiceover,
+                fake brick phone, and more.
+            </span>
+        </a>
+
+        <span class="btn-name">
+            More coming soon...
+        </span>
+
+    </div>
+
+</main>
+
+<!-- =========================
+     SOCIAL BUTTONS
+========================= -->
+
+<a
+    class="social-button youtube-button"
+    href="https://www.youtube.com/@carbon612"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    ✦ subscribe to carbon612 on youtube
+</a>
+
+<a
+    class="social-button scratch-button"
+    href="https://scratch.mit.edu/users/jeremy2050/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    ✦ follow carbon612 on scratch
+</a>
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio
+    id="backgroundMusic"
+    loop
+    preload="auto"
+>
+    <source
+        src="https://byteful.is-a.dev/Happy%20Fun%20Candy%20Time.mp3"
+        type="audio/mpeg"
+    >
+</audio>
+
+<script>
+    /* =========================
+       ELEMENTS
+    ========================= */
+
+    const enterScreen =
+        document.getElementById("enterScreen");
+
+    const music =
+        document.getElementById("backgroundMusic");
+
+    const musicToggle =
+        document.getElementById("musicToggle");
+
+    const playButton =
+        document.getElementById("playButton");
+
+    const musicStatus =
+        document.getElementById("musicStatus");
+
+    const volumeSlider =
+        document.getElementById("volumeSlider");
+
+    const volumeValue =
+        document.getElementById("volumeValue");
+
+    const stripes =
+        document.getElementById("stripes");
+
+    const stripeAnimation =
+        document.getElementById("stripeAnimation");
+
+    const stripeOpacity =
+        document.getElementById("stripeOpacity");
+
+    const stripeOpacityValue =
+        document.getElementById("stripeOpacityValue");
+
+    const stripeSpeed =
+        document.getElementById("stripeSpeed");
+
+    const stripeSpeedValue =
+        document.getElementById("stripeSpeedValue");
+
+    const settingsButton =
+        document.getElementById("settingsButton");
+
+    const settingsPanel =
+        document.getElementById("settingsPanel");
+
+    /* =========================
+       MUSIC
+    ========================= */
+
+    music.volume = 0.5;
+
+    function playMusic() {
+        if (!musicToggle.checked) {
+            return;
+        }
+
+        music.play()
+            .then(() => {
+                playButton.textContent =
+                    "⏸ Pause Music";
+
+                musicStatus.textContent =
+                    "Music playing";
+            })
+            .catch(() => {
+                musicStatus.textContent =
+                    "Click Play Music to start";
+            });
+    }
+
+    function pauseMusic() {
+        music.pause();
+
+        playButton.textContent =
+            "▶ Play Music";
+
+        musicStatus.textContent =
+            "Music paused";
+    }
+
+    playButton.addEventListener("click", () => {
+        if (music.paused) {
+            playMusic();
+        } else {
+            pauseMusic();
+        }
+    });
+
+    musicToggle.addEventListener("change", () => {
+        if (musicToggle.checked) {
+            musicStatus.textContent =
+                "Music enabled";
+
+            playMusic();
+        } else {
+            pauseMusic();
+
+            musicStatus.textContent =
+                "Music disabled";
+        }
+    });
+
+    volumeSlider.addEventListener("input", () => {
+        const value =
+            Number(volumeSlider.value);
+
+        music.volume = value / 100;
+
+        volumeValue.textContent =
+            value + "%";
+    });
+
+    /* =========================
+       ENTER SCREEN
+    ========================= */
+
+    enterScreen.addEventListener("click", () => {
+
+        enterScreen.classList.add("hidden");
+
+        if (musicToggle.checked) {
+            music.currentTime = 0;
+
+            music.play()
+                .then(() => {
+                    playButton.textContent =
+                        "⏸ Pause Music";
+
+                    musicStatus.textContent =
+                        "Music playing";
+                })
+                .catch(() => {
+                    musicStatus.textContent =
+                        "Music couldn't start";
+                });
+        }
+    });
+
+    /* =========================
+       SETTINGS
+    ========================= */
+
+    settingsButton.addEventListener("click", () => {
+        settingsPanel.classList.toggle("open");
+    });
+
+    /* =========================
+       STRIPE ANIMATION
+    ========================= */
+
+    function updateStripeAnimation() {
+        if (stripeAnimation.checked) {
+            stripes.classList.remove("paused");
+        } else {
+            stripes.classList.add("paused");
+        }
+    }
+
+    stripeAnimation.addEventListener(
+        "change",
+        updateStripeAnimation
+    );
+
+    stripeOpacity.addEventListener("input", () => {
+
+        const value =
+            Number(stripeOpacity.value);
+
+        stripes.style.opacity =
+            value / 100;
+
+        stripeOpacityValue.textContent =
+            value + "%";
+    });
+
+    stripeSpeed.addEventListener("input", () => {
+
+        const value =
+            Number(stripeSpeed.value);
+
+        /*
+         * Lower seconds = faster animation.
+         */
+        stripes.style.animationDuration =
+            value + "s";
+
+        stripeSpeedValue.textContent =
+            value + "s";
+    });
+
+    /* =========================
+       TYPEWRITER
+    ========================= */
+
+    const textArray = [
+        "iOS Shortcuts"
+    ];
+
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    const typeSpeed = 150;
+    const eraseSpeed = 100;
+    const delayBetween = 2500;
+
+    const typewriterElement =
+        document.getElementById("typewriter");
+
+    function type() {
+
+        const currentText =
+            textArray[textIndex];
+
+        if (isDeleting) {
+
+            typewriterElement.textContent =
+                currentText.substring(
+                    0,
+                    charIndex - 1
+                );
+
+            charIndex--;
+
+        } else {
+
+            typewriterElement.textContent =
+                currentText.substring(
+                    0,
+                    charIndex + 1
+                );
+
+            charIndex++;
+        }
+
+        let nextActionSpeed =
+            isDeleting
+                ? eraseSpeed
+                : typeSpeed;
+
+        if (
+            !isDeleting &&
+            charIndex === currentText.length
+        ) {
+
+            nextActionSpeed =
+                delayBetween;
+
+            isDeleting = true;
+
+        } else if (
+            isDeleting &&
+            charIndex === 0
+        ) {
+
+            isDeleting = false;
+
+            textIndex =
+                (textIndex + 1) %
+                textArray.length;
+
+            nextActionSpeed = 500;
+        }
+
+        setTimeout(type, nextActionSpeed);
+    }
+
+    /* =========================
+       START
+    ========================= */
+
+    stripes.style.animationDuration = "4s";
+
+    updateStripeAnimation();
+
+    setTimeout(type, 500);
+</script>
+
+</body>
+</html>
